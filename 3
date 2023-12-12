@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+
+namespace DZ5
+{
+    abstract class Figure
+    {
+        private string name;
+
+        public Figure(string _name)
+        {
+            name = _name;
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        protected abstract float Area();
+
+        public abstract float Area2 
+        { 
+            get; 
+        }
+
+        public virtual void Print()
+        {
+            Console.WriteLine($"Название фигуры:{Name}");
+        }
+    }
+
+    class Triangle: Figure
+    {
+        private int a;
+        private int b;
+        private int c;
+
+        public Triangle(int a, int b, int c, string name)
+            :base(name)
+        {
+            SetABC(a, b, c);
+        }
+
+        public void SetABC(int a, int b, int c)
+        {
+            this.a = a;
+            this.b = b;
+            this.c = c;
+        }
+
+        public void GetABC(out int a, out int b, out int c)
+        {
+            a = this.a;
+            b = this.b;
+            c = this.c;
+        }
+
+        protected override float Area()
+        {
+            float p = (a+b+c)/2;
+            return (float)Math.Sqrt(p * (p - a) * (p - b) * (p - c));
+        }
+
+        public override float Area2
+        {
+            get {  return Area(); }
+        }
+
+        public override void Print()
+        {
+            base.Print();
+            int f;
+            int s;
+            int t;
+            GetABC(out f, out s, out t);
+            Console.WriteLine($"1-я сторона: {f}, 2-я сторона: {s}, 3-я сторона: {t}");
+        }
+    }
+
+    class TriangleColor: Triangle
+    {
+        private string color;
+
+        public TriangleColor(int a, int b, int c, string name, string color)
+            :base(a,b,c,name)
+        {
+            this.color = color;
+        }
+
+        public string Color
+        {
+            get { return color; }
+        }
+
+        public override void Print()
+        {
+            base.Print();
+            Console.WriteLine($"Цвет треугольника:{Color}");
+        }
+    }
+    class Program
+    {
+        static void Main()
+        {
+            TriangleColor triangle = new TriangleColor(3, 4, 5, "1", "red");
+            Console.WriteLine($"Площадь:{triangle.Area2}");
+            triangle.Print();
+        }
+    }
+}
