@@ -1,0 +1,101 @@
+using System;
+namespace DZ1
+{
+    class Book
+    {
+        private string name_Book;
+
+        public string NameBook
+        {
+            get { return name_Book; }
+            private set { name_Book = value; }
+        }
+        private string fI_Author;
+
+        public string FI_Author
+        {
+            get { return fI_Author; }
+            private set { fI_Author = value; }
+        }
+        private int cost;
+
+        public int Cost
+        {
+            get { return cost; }
+            private set { cost = value; }
+        }
+
+        public Book(string name_Book, string fI_Author, int cost)
+        {
+            NameBook = name_Book;
+            FI_Author = fI_Author;
+            Cost = cost;
+        }
+        public virtual void Print()
+        {
+            Console.WriteLine("Название книги:{0}", NameBook);
+            Console.WriteLine($"Фамилия и имя автора:{FI_Author}"); 
+            Console.WriteLine("Стоимость книги:{0}", Cost);
+        }
+    }
+
+    class BookGenre : Book
+    {
+        private string genre;
+
+        public string Genre
+        {
+            get { return genre; }
+            private set { genre = value; }
+        }
+
+        public BookGenre(string name_Book, string fI_Author, int cost, string genre)
+            :base(name_Book,fI_Author,cost)
+        {
+            Genre = genre;
+        }
+        public override void Print() 
+        {
+            base.Print();
+            Console.WriteLine($"Жанр книги:{Genre}"); 
+        }
+    }
+
+    class BookGenrePubl : BookGenre
+    {
+        private string publ;
+
+        public string Publ
+        {
+            get { return publ; }
+            private set { publ = value; }
+        }
+
+        public BookGenrePubl(string name_Book, string fI_Author, int cost, string genre, string publ)
+            :base(name_Book, fI_Author, cost, genre)
+        {
+            Publ = publ;
+        }
+
+        public override void Print()
+        {
+            base.Print();
+            Console.WriteLine($"Издатель книги:{Publ}");
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            var book = new Book("Book1", "Author1", 100);
+            book.Print();
+
+            var bookGenre = new BookGenre("Book1", "Author1", 100,"Genre1");
+            bookGenre.Print();
+
+            var bookGenrePubl = new BookGenrePubl("Book1", "Author1", 100, "Genre1","Publ1");
+            bookGenrePubl.Print();
+        }
+    }
+}
